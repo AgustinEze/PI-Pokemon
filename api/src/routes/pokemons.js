@@ -1,11 +1,20 @@
 const { Router } = require('express');
+const {Pokemon} = require('../db');
 
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.post('/', async (req, res, next)=>{
-    res.send('soy post pokemons')
+    const {id, image, name, hp, types, 
+        attack, defense, speed, height, 
+        weight}=req.body
+    const newPokemon = await Pokemon.create(
+        {id, name, hp,
+        attack, defense,
+        speed, height, weight})
+
+    res.send(newPokemon)
 })
 
 router.get('/',async (req, res, next)=>{
