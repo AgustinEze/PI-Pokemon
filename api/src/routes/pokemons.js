@@ -12,7 +12,8 @@ router.post('/', async (req, res, next)=>{
     const newPokemon = await Pokemon.create(
         {id, name, hp,
         attack, defense,
-        speed, height, weight})
+        speed, height, weight});
+    newPokemon.addTypes(types);
 
     res.send(newPokemon)
 })
