@@ -1,7 +1,11 @@
+const { default: axios } = require('axios');
 const { Router } = require('express');
+
 const {Pokemon} = require('../db');
 
 const router = Router();
+
+const MAX_POKES = 40
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -12,7 +16,7 @@ router.post('/', async (req, res, next)=>{
     const newPokemon = await Pokemon.create(
         {id, name, hp,
         attack, defense,
-        speed, height, weight});
+        speed, height, weight, image});
     newPokemon.addTypes(types);
 
     res.send(newPokemon)
@@ -23,7 +27,30 @@ router.get('/',async (req, res, next)=>{
     if(name){    
         return res.send(`soy get pokemons query ${name}`)
     }
-    return res.send('soy get pokemons');
+
+    try{
+        let pokemonsUrl =await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKES}`)
+        pokemonsUrl = pokemonsUrl.data.results.map(poke => poke.url)
+        const allPokemons = await Promise.all(pokemonsUrl.map(async(url)=> await axios.get(url)))
+
+        const allPokemonData = allPokemons.map((dataPoke)=>{
+            return {
+            id: dataPoke.data.id,
+            name: dataPoke.data.name,
+            image: dataPoke.data.sprites.other.dream_world.front_default,
+            hp: dataPoke.data.stats.filter(st=>st.stat.name==='hp')[0].base_stat,
+            attack: dataPoke.data.stats.filter(st=>st.stat.name==='attack')[0].base_stat,
+            defense: dataPoke.data.stats.filter(st=>st.stat.name==='defense')[0].base_stat,
+            speed: dataPoke.data.stats.filter(st=>st.stat.name==='speed')[0].base_stat,
+            heigth: dataPoke.data.height, 
+            weight: dataPoke.data.weight
+        }})
+        console.log(allPokemonData)
+    }catch(err){res.send(err)}     
+
+
+        return res.send('allPokemons');
+
 })
 
 router.get('/:idPokemon',async (req, res, next)=>{
