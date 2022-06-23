@@ -19,15 +19,15 @@ router.get('/',async (req, res, next)=>{
                 const{id, name}=res.data
                 return {id,name}
             })
-            console.log(allTypes)
+
             allTypes.forEach(async type => {
                 await Type.create(type)
             });
+            console.log(allTypes)
         }
         return res.json(allTypes)
     }
     catch(err){console.log(err)}
-    
 })
 
 module.exports = router;
