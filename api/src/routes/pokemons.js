@@ -13,13 +13,18 @@ router.post('/', async (req, res, next)=>{
     const {id, image, name, hp, type, 
         attack, defense, speed, height, 
         weight}=req.body
-    const newPokemon = await Pokemon.create(
+    try{const newPokemon = await Pokemon.create(
         {id, name, hp,
         attack, defense,
-        speed, height, weight, image});
-    //newPokemon.addTypes(type);
-
-    res.send(newPokemon)
+        speed, height, weight, image
+    });
+    if(type) newPokemon.addTypes(type.map(t=>t*1));
+    
+    res.status(200).send('Creacion OK')
+    }catch(err){
+        console.log(err)
+        res.status(400).send('Error de creacion')
+    }
 })
 ////////////////////////////////////
 
@@ -27,12 +32,22 @@ router.post('/', async (req, res, next)=>{
 ////////////////////////////////////
 router.get('/',async (req, res, next)=>{
     const {name}=req.query;
-    if(name){    
-        return res.send(`soy get pokemons query ${name}`)
+    if(name){
+        try{
+            let poke =await Pokemon.findOne({where:{name}, include:[Type]})
+            if(poke) return res.send(poke)
+            poke = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+            console.log('soy pokedata',poke.data)
+            if(poke) return res.send(poke.data)
+
+        }catch(err){
+            console.log("err")
+            return res.status(404).send('No se encontro')
+        }    
     }
 
     try{
-        const pokemonDb = await Pokemon.findAll({include:{model: Type, attributes: ['name']}})
+        const pokemonDb = await Pokemon.findAll({include:{model: Type}})
         console.log(pokemonDb)
         let pokemonUrl =await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKES}`)
         pokemonUrl = pokemonUrl.data.results.map(poke => poke.url)
@@ -51,9 +66,11 @@ router.get('/',async (req, res, next)=>{
             weight: dataPoke.data.weight,
             type: dataPoke.data.types.map(t=>t.type.name)
         }})
-        console.log(pokemonApi)
         return res.send([...pokemonDb,...pokemonApi])
-    }catch(err){res.send(err)}     
+    }catch(err){
+        console.log(err)
+        res.status(400).send('Error')
+    }     
 })
 
 router.get('/:idPokemon',async (req, res, next)=>{
