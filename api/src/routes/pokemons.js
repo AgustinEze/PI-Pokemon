@@ -1,27 +1,30 @@
 const { default: axios } = require('axios');
 const { Router } = require('express');
 
-const {Pokemon} = require('../db');
+const {Pokemon, Type} = require('../db');
 
 const router = Router();
 
-const MAX_POKES = 40
+const MAX_POKES = 10
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-router.post('/', async (req, res, next)=>{
-    const {id, image, name, hp, types, 
+router.post('/', async (req, res, next)=>{ 
+    const {id, image, name, hp, type, 
         attack, defense, speed, height, 
         weight}=req.body
     const newPokemon = await Pokemon.create(
         {id, name, hp,
         attack, defense,
         speed, height, weight, image});
-    newPokemon.addTypes(types);
+    //newPokemon.addTypes(type);
 
     res.send(newPokemon)
 })
+////////////////////////////////////
 
+
+////////////////////////////////////
 router.get('/',async (req, res, next)=>{
     const {name}=req.query;
     if(name){    
@@ -29,11 +32,13 @@ router.get('/',async (req, res, next)=>{
     }
 
     try{
-        let pokemonsUrl =await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKES}`)
-        pokemonsUrl = pokemonsUrl.data.results.map(poke => poke.url)
-        const allPokemons = await Promise.all(pokemonsUrl.map(async(url)=> await axios.get(url)))
-
-        const allPokemonData = allPokemons.map((dataPoke)=>{
+        const pokemonDb = await Pokemon.findAll({include:{model: Type, attributes: ['name']}})
+        console.log(pokemonDb)
+        let pokemonUrl =await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKES}`)
+        pokemonUrl = pokemonUrl.data.results.map(poke => poke.url)
+        pokemonData = await Promise.all(pokemonUrl.map(async(url)=> await axios.get(url)))
+ 
+        const pokemonApi = pokemonData.map((dataPoke)=>{
             return {
             id: dataPoke.data.id,
             name: dataPoke.data.name,
@@ -43,14 +48,12 @@ router.get('/',async (req, res, next)=>{
             defense: dataPoke.data.stats.filter(st=>st.stat.name==='defense')[0].base_stat,
             speed: dataPoke.data.stats.filter(st=>st.stat.name==='speed')[0].base_stat,
             heigth: dataPoke.data.height, 
-            weight: dataPoke.data.weight
+            weight: dataPoke.data.weight,
+            type: dataPoke.data.types.map(t=>t.type.name)
         }})
-        console.log(allPokemonData)
+        console.log(pokemonApi)
+        return res.send([...pokemonDb,...pokemonApi])
     }catch(err){res.send(err)}     
-
-
-        return res.send('allPokemons');
-
 })
 
 router.get('/:idPokemon',async (req, res, next)=>{
