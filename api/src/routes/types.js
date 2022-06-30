@@ -27,7 +27,10 @@ router.get('/',async (req, res, next)=>{
         }
         return res.json(allTypes)
     }
-    catch(err){console.log(err)}
+    catch(err){
+        console.log(err);
+        res.status(400).send('Error types');
+    }
 })
 
 module.exports = router;
