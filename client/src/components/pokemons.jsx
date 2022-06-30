@@ -12,7 +12,6 @@ export default function Pokemons(){
     return(
         <div>
             {pokemons.map(poke =>{
-                console.log(poke)
                 return(
                     <Pokemon pokemon={poke} /> 
                 )
