@@ -1,15 +1,22 @@
 import React from 'react';
 
-export default Pokemon = (props)=>{
+export const Pokemon = (props)=>{
+    const {image, name, type} = props.pokemon
+    console.log('soy pokemon',props.pokemon)
     return(
         <div>
-            <img src={props.image}/>
-            <h1>{props.name}</h1>
-            <ul>{props.type.map(t=>{
-                return(
-                    <li>{t}</li>
-                )
-            })}</ul>
+            <img src={image} alt='Not Found'/>
+            <h1>{name}</h1>
+            { 
+                type &&
+                <ul>
+                    {type.map((t,i)=>{
+                        return(
+                            <li key={i}>{t}</li>
+                        )
+                    })}
+                </ul>
+            } 
         </div>
     )
 }

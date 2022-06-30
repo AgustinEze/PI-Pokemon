@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default PokemonDetails =(props)=>{
+export const PokemonDetails =(props)=>{
     return(
         <div>
-            <img src={props.image}/>
+            <img src={props.image} alt='Not Found'/>
             <h1>{props.name}</h1>
             <ul>{props.type.map(t=>{
                 return(

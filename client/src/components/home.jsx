@@ -1,9 +1,10 @@
 import React from 'react';
+import pokemon from '../img/pokemon.png'
 
-export default  Home = ()=>{
+export const Home = ()=>{
     return(
         <div>
-            <img src='../img/pokemon.png' alt='Not found'/>
+            <img src={pokemon} alt='Not found'/>
             <button onClick>Gotta catch'em all!</button>
         </div>
     )
