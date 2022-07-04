@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 export const Pokemon = (props)=>{
-    const {image, name, type} = props.pokemon
+    const {image, name, type, id} = props.pokemon
     return(
         <div>
-            <img src={image} alt='Not Found'/>
+            <Link to={`pokemons/${id}`}>
+                <img src={image} alt='Not Found'/>
+            </Link>
             <h1>{name}</h1>
             { 
                 type &&

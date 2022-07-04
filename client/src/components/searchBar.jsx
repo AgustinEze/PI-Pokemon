@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const NavBar = () =>{
+export function SearchBar(){
     return(
         <div>            
-            <input>
+            <input type='text'>
             </input>
             <button>
                 Search

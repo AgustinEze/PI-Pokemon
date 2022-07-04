@@ -1,4 +1,4 @@
-import {GET_POKEMONS} from '../actions'
+import {GET_POKEMONS, GET_POKEMON_BY_ID} from '../actions'
   
 
 const initialState={
@@ -13,6 +13,11 @@ export default function actionReducer (state=initialState, action){
             return{
                 ...state,
                 pokemons: action.payload
+            }
+        case GET_POKEMON_BY_ID:
+            return{
+                ...state,
+                
             }
         default:
             return state;
