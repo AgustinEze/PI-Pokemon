@@ -1,12 +1,12 @@
 const { default: axios } = require('axios');
 const { Router } = require('express');
-
 const {Pokemon, Type} = require('../db');
 
 const router = Router();
 
-const MAX_POKES = 10
+const MAX_POKES = 20
 
+// luis
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.post('/', async (req, res, next)=>{ 
@@ -18,7 +18,7 @@ router.post('/', async (req, res, next)=>{
         attack, defense,
         speed, height, weight, image
     });
-    console.log(type)
+
     type.length? newPokemon.addTypes(type.map(t=>t*1)):newPokemon.addTypes(10001)
     
     res.status(200).send('Creacion OK')
@@ -98,7 +98,7 @@ router.get('/:idPokemon',async (req, res, next)=>{
             attack: pokeApi.data.stats.filter(st=>st.stat.name==='attack')[0].base_stat,
             defense: pokeApi.data.stats.filter(st=>st.stat.name==='defense')[0].base_stat,
             speed: pokeApi.data.stats.filter(st=>st.stat.name==='speed')[0].base_stat,
-            heigth: pokeApi.data.height, 
+            height: pokeApi.data.height, 
             weight: pokeApi.data.weight,
             type: pokeApi.data.types.map(t=>t.type.name)
         }) 
