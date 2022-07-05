@@ -36,20 +36,20 @@ router.get('/',async (req, res, next)=>{
     if(name){
         try{
             let pokeDb =await Pokemon.findOne({where:{name}, include:[Type]})
-            if(pokeDb) return res.send(pokeDb)
+            if(pokeDb) return res.send([pokeDb])
             let pokeApi= await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-            return res.send ({
+            return res.send ([{
                 id: pokeApi.data.id,
                 name: pokeApi.data.name,
                 image: pokeApi.data.sprites.other.dream_world.front_default,
-                hp: pokeApi.data.stats.filter(st=>st.stat.name==='hp')[0].base_stat,
-                attack: pokeApi.data.stats.filter(st=>st.stat.name==='attack')[0].base_stat,
-                defense: pokeApi.data.stats.filter(st=>st.stat.name==='defense')[0].base_stat,
-                speed: pokeApi.data.stats.filter(st=>st.stat.name==='speed')[0].base_stat,
-                heigth: pokeApi.data.height, 
-                weight: pokeApi.data.weight,
+                //hp: pokeApi.data.stats.filter(st=>st.stat.name==='hp')[0].base_stat,
+                //attack: pokeApi.data.stats.filter(st=>st.stat.name==='attack')[0].base_stat,
+                //defense: pokeApi.data.stats.filter(st=>st.stat.name==='defense')[0].base_stat,
+                //speed: pokeApi.data.stats.filter(st=>st.stat.name==='speed')[0].base_stat,
+                //heigth: pokeApi.data.height, 
+                //weight: pokeApi.data.weight,
                 type: pokeApi.data.types.map(t=>t.type.name)
-            })
+            }])
       
         }catch(err){
             console.log("err")
