@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const GET_POKEMONS = 'GET_POKEMONS';
 export const GET_POKEMON_BY_ID = 'GET_POKEMON_BY_ID';
+export const GET_POKEMON_BY_NAME='GET_POKEMON_BY_NAME'
 
 export function getPokemons(){
     return function(dispatch){
@@ -22,6 +23,25 @@ export function getPokemonById(id){
             dispatch({
                 type:GET_POKEMON_BY_ID,
                 payload: res.data
+            })
+        })
+    }
+}
+
+export function postNewPokemon(body){
+    return function (dispatch){
+        axios.post('http://localhost:3001/pokemons',body)
+
+    }
+}
+
+export function getPokemonByName(name){
+    return function (dispatch){
+        axios.get('http://localhost:3001/pokemons?name='+name)
+        .then(res=>{
+            dispatch({
+                type:GET_POKEMON_BY_NAME,
+                payload:res.data
             })
         })
     }

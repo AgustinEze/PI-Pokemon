@@ -7,8 +7,6 @@ export const NewPokemon = ()=>{
             <Link to='/pokemons'>
                 <button>Volver</button>
             </Link>
-
-            soy newpoke
             <form>
                 
             </form>

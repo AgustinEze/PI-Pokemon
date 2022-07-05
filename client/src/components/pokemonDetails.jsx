@@ -2,6 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react'
 import {useParams, Link} from 'react-router-dom';
 import axios from 'axios'
+import Loading from './Loading'
 
 export function PokemonDetails(){
     const [pokemon, setPokemon] = useState(null)
@@ -38,7 +39,7 @@ export function PokemonDetails(){
             <h2>Height: {pokemon&&pokemon.height}</h2>
             <h2>Weight: {pokemon&&pokemon.weight}</h2>
         </>
-        :<div>loading</div>}
+        :<div><Loading/></div>}
         </div>        
     )
 }

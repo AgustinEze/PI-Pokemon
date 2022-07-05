@@ -5,8 +5,8 @@ import {Link} from 'react-router-dom'
 export const Home = ()=>{
     return(
         <div>
-             <Link to="/pokemons">
-                <img src={pokemon} alt='Not found'/>
+            <img src={pokemon} alt='Not found'/>
+            <Link to="/pokemons">    
                 <button type="button">
                     Gotta catch'em all!
                 </button>
