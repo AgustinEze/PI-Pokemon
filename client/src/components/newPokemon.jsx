@@ -18,6 +18,9 @@ export const NewPokemon = ()=>{
         height:null,
         weight:null
     })
+    function handleCheck(){
+        
+    }
     
     function handleSubmit(e){
         e.preventDefault()
@@ -48,13 +51,23 @@ export const NewPokemon = ()=>{
                 </label>
 
                 <label>Type 
-                <select name='type' onChange={onChange}>
-                    {types.map(type=>{
-                        return(
-                            <option key={type.id} value={type.name}>{type.name}</option>
-                        )
-                    })}
-                </select>
+                {types.map((type, i) => {
+                    return (
+                    <div key={i}>
+                        <label>
+                        <input
+                            type="checkbox"
+                            name={type.name}
+                            id={`chbx${i}`}
+                            value={type.id}
+                            onChange={handleCheck}
+                        />{" "}
+                        {type.name}
+                        </label>
+                        <br />
+                    </div>
+                    );
+                })}
                 </label>
 
                 <label>Health points

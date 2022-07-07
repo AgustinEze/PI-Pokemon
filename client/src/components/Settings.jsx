@@ -4,12 +4,31 @@ import { useSelector } from 'react-redux'
 export function Settings(){
     let types = useSelector(store=>store.types)
     
+    function handleCheck(){
+
+    }
     return(
         <div>
             <fieldset>
                 <legend>Filter By</legend>
                 <label>Type</label>
-                {/* terminar filtros */}
+                {types.map((type, i) => {
+                    return (
+                    <div key={i}>
+                        <label>
+                        <input
+                            type="checkbox"
+                            name={type.name}
+                            id={`chbx${i}`}
+                            value={type.id}
+                            onChange={handleCheck}
+                        />{" "}
+                        {type.name}
+                        </label>
+                        <br />
+                    </div>
+                    );
+                })}
                 
                 <label>Created by</label>
                     <select>
@@ -29,6 +48,9 @@ export function Settings(){
             </fieldset>
             <fieldset>Page
 
+            </fieldset>
+            <fieldset>
+                Restore all
             </fieldset>
         </div>
     )
