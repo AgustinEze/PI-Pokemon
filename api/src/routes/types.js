@@ -23,7 +23,6 @@ router.get('/',async (req, res, next)=>{
             allTypes.forEach(async type => {
                 await Type.create(type)
             });
-            console.log(allTypes)
         }
         return res.json(allTypes)
     }
