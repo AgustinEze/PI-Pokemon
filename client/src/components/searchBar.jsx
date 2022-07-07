@@ -2,7 +2,7 @@ import React from 'react';
 import {useState} from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
-import { getPokemonByName, getPokemons } from '../store/actions';
+import { getPokemonByName, restorePokemons } from '../store/actions';
 
 export function SearchBar(){
     const [name, setName] = useState('');
@@ -11,17 +11,14 @@ export function SearchBar(){
 
     function onSubmit(e){
         e.preventDefault();
-        if(!!name){
-            dispatch(getPokemons)
-        }
         dispatch(getPokemonByName(name))
-
     }
 
     function onChange(e){
         e.preventDefault();
         setName(e.target.value)
     }
+    
     return(
         <div>
             <form onSubmit={onSubmit}>
