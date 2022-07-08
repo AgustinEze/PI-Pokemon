@@ -6,10 +6,26 @@ import { Pokemon } from './Pokemon';
 import { SearchBar } from './SearchBar'
 import { Settings } from './Settings';
 import Loading from './Loading'
+import './Pokemons.css'
+const POKES_PER_PAGE = 12;
 
 export default function Pokemons(){
-    let pokemons = useSelector(state=>state.displayedPokemons);
+    let pokes = useSelector(state=>state.displayedPokemons);
     let dispatch = useDispatch();
+    let pokemons = [...pokes]
+    const MAX_PAGES = Math.ceil(pokemons.length/POKES_PER_PAGE)
+
+    const [page, setPage]= useState(1)
+    pokemons = pokemons.slice((page-1)*POKES_PER_PAGE,page*POKES_PER_PAGE)
+    function increasePage(){
+        if(page<MAX_PAGES)
+            setPage(page+1)
+    }
+    function decreasePage(){
+        if(page>1){
+            setPage(page-1)
+        }
+    }
 
     useEffect(()=>{
         dispatch(getPokemons())
@@ -26,16 +42,28 @@ export default function Pokemons(){
             <Link to='/'>
                 <button>Home</button>                
             </Link>
-            < Settings />
-            {pokemons.length?<>{pokemons.map(poke =>{
-                return(
-                    <Pokemon pokemon={poke} /> 
-                )
-            })}
+            
+            {pokemons.length?<>
+                <div className='pokemonsContainer'>
+                    < Settings />
+                    {pokemons.map(poke =>{
+                    return(
+                        <Pokemon pokemon={poke} /> 
+                    )
+                })}
+                </div>
             </>:<><Loading /></>}
             <Link to='/newpokemon/'>
-                <button>Add new Pokemon</button>
-            </Link>   
+                <button className='addButton'>Add new Pokemon</button>
+            </Link>
+            <fieldset className='footer'>
+                <div >
+                    Pages
+                    <button onClick={decreasePage}>Prev...</button>
+                    <div>{page}</div>
+                    <button onClick={increasePage}>Next...</button>
+                </div>                
+            </fieldset>
         </div>
     )
 }

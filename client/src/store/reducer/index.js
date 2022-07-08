@@ -1,12 +1,10 @@
 import {GET_POKEMONS, GET_POKEMON_BY_NAME,
-    RESTORE_POKEMONS, GET_TYPES} from '../actions'
+    RESTORE_POKEMONS, GET_TYPES, APPLY_FILTERS} from '../actions'
   
 
 const initialState={
     pokemons: [],
     displayedPokemons:[],
-    filter:{},
-    sort:{},
     types:[]
 };
 
@@ -27,15 +25,19 @@ export default function actionReducer (state=initialState, action){
             return{
                 ...state,
                 displayedPokemons: [...state.pokemons],
-                filter:{},
-                sort: {}
             }
         case GET_TYPES:
             return{
                 ...state,
                 types: action.payload
             }
+        case APPLY_FILTERS:
+            return{
+                ...state,
+                displayedPokemons: action.payload
+            }
         default:
             return state;
+        
     }
 };

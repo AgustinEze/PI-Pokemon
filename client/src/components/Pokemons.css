@@ -1,0 +1,23 @@
+.pokemonsContainer{
+    display: flex;
+    margin-left:10%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+body{
+    margin-bottom:100px;
+}
+.footer{
+    position: fixed;
+    bottom: 0px;
+    width: 25%;
+    height: 50px;
+    margin: auto; /* Will not center vertically and won't work in IE6/7. */
+    left: 0;
+    right: 0;
+}
+.addButton{
+    position:fixed;
+    right: 0;
+    bottom: 0;
+}

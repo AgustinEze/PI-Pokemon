@@ -7,6 +7,9 @@ export const RESTORE_POKEMONS= 'RESTORE_POKEMONS';
 export const GET_TYPES = 'GET_TYPES';
 export const SORT_POKEMONS = 'SORT_POKEMONS';
 export const FILTER_POKEMONS = 'FILTER_POKEMONS';
+export const RESTORE_FILTERS= 'RESTORE_FILTERS';
+export const SET_FILTERS= 'SET_FILTERS';
+export const APPLY_FILTERS= 'APPLY_FILTERS';
 
 
 export function getPokemons(){
@@ -52,7 +55,15 @@ export function getPokemonByName(name){
     }
 }
 
-export function restorePokemons(name){
+export function restoreFilters(){
+    return function(dispatch){
+        dispatch({
+            type: RESTORE_POKEMONS,
+        })
+    }
+}
+
+export function restorePokemons(){
     return function (dispatch){
         dispatch({
             type:RESTORE_POKEMONS
@@ -68,6 +79,15 @@ export function getTypes(){
                 type: GET_TYPES,
                 payload: res.data 
             })
+        })
+    }
+}
+
+export function setFilters(pokes){
+    return function (dispatch){
+        dispatch({
+            type:APPLY_FILTERS,
+            payload: pokes
         })
     }
 }
