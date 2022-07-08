@@ -4,7 +4,7 @@ const {Pokemon, Type} = require('../db');
 
 const router = Router();
 
-const MAX_POKES = 20
+const MAX_POKES = 25
 
 // luis
 // Configurar los routers
