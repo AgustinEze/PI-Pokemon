@@ -92,7 +92,7 @@ export const NewPokemon = ()=>{
         }
     }
     return(
-        <div>
+        <div className='form'>
             <Link to='/pokemons'>
                 <button>Volver </button>
             </Link>

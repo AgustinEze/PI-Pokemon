@@ -155,7 +155,7 @@ export function Settings(){
                 <label>Type</label>
                 {types.map((type, i) => {
                     return (
-                    <div key={i}>
+                    <div className='typeOption' key={i}>
                         <input
                             type="checkbox"
                             name={type.name}

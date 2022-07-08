@@ -57,11 +57,11 @@ export default function Pokemons(){
                 <button className='addButton'>Add new Pokemon</button>
             </Link>
             <fieldset className='footer'>
-                <div >
-                    Pages
-                    <button onClick={decreasePage}>Prev...</button>
-                    <div>{page}</div>
-                    <button onClick={increasePage}>Next...</button>
+                <div className='footerTitle'>
+                    <div>Pages</div>
+                    <button className='footerPage' onClick={decreasePage}>Prev...</button>
+                    <div className='footerPage' >{page}</div>
+                    <button onClick={increasePage} className='footerPage' >Next...</button>
                 </div>                
             </fieldset>
         </div>

@@ -21,6 +21,10 @@ export function getPokemons(){
                 payload: res.data
             })
         })
+        .catch(err=>{
+            console.log(err)
+            alert('Ocurrio un error')
+        })
     }
 }
 
@@ -33,13 +37,16 @@ export function getPokemonById(id){
                 payload: res.data
             })
         })
+        .catch(err=>{
+            console.log(err)
+            alert('Ocurrio un error')
+        })
     }
 }
 
 export function postNewPokemon(body){
     return function (dispatch){
         axios.post('http://localhost:3001/pokemons',body)
-
     }
 }
 
@@ -51,6 +58,10 @@ export function getPokemonByName(name){
                 type:GET_POKEMON_BY_NAME,
                 payload: res.data
             })
+        })
+        .catch(err=>{
+            console.log(err)
+            alert('Ocurrio un error')
         })
     }
 }
@@ -79,6 +90,10 @@ export function getTypes(){
                 type: GET_TYPES,
                 payload: res.data 
             })
+        })
+        .catch(err=>{
+            console.log(err)
+            alert('Ocurrio un error')
         })
     }
 }
