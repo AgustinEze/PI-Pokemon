@@ -9,15 +9,15 @@ const MAX_POKES = 10
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.post('/', async (req, res, next)=>{ 
-    let {id, image, name, hp, type, 
+    let {image, name, hp, type, 
         attack, defense, speed, height, 
         weight}=req.body
 
-    if(!image){
+/*     if(!image){
         image=__dirname+'/images/pokeDefault.jpg'
-    }
+    } */
     try{const newPokemon = await Pokemon.create(
-        {id, name, hp,
+        {name, hp,
         attack, defense,
         speed, height, weight, image
     });
@@ -38,7 +38,7 @@ router.get('/',async (req, res, next)=>{
     const {name}=req.query;
     if(name){
         try{
-            let pokeDb =await Pokemon.findOne({where:{name}, /* include:[Type]} */})
+            let pokeDb =await Pokemon.findOne({where:{name}, include:[Type]})
             if(pokeDb) return res.send([pokeDb])
             let pokeApi= await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
             return res.send ([{
@@ -62,7 +62,7 @@ router.get('/',async (req, res, next)=>{
     //not query
     try{
         const pokemonDb = await Pokemon.findAll(
-            {/* include: {model:Type}, */
+            {include: {model:Type},
             attributes:['id', 'name', 'image', 'attack']})
 
         let pokemonUrl =await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKES}`)
