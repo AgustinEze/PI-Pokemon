@@ -97,64 +97,80 @@ export const NewPokemon = ()=>{
                 <button>Volver </button>
             </Link>
             <form onSubmit={handleSubmit}>
-                <label>Image  
-                 <input name='image' onChange={e=>onChange(e)}></input>
-                </label>
+                <div>
+                    <label>Image  
+                    <input name='image' onChange={e=>onChange(e)}></input>
+                    </label>
+                </div>
 
-                <label>Name  
-                 <input name='name' onChange={e=>onChange(e)}></input>
-                 {error.name?(<h4 className="error"><small>Nombre invalido</small></h4>) : false}
-                </label>
+                <div>
+                    <label>Name  
+                    <input name='name' onChange={e=>onChange(e)}></input>
+                    {error.name?(<h4 className="error"><small>Nombre invalido</small></h4>) : false}
+                    </label>
+                </div>
+                <div>
+                    <label>Type</label>  
+                    {types.map((type, i) => {
+                        return (
+                        <div key={i}>
+                            <label>
+                            <input
+                                type="checkbox"
+                                name={type.name}
+                                id={i}
+                                value={type.id}
+                                onChange={e=>handleCheck(e)}
+                            />
+                            {type.name}
+                            </label>
+                            <br />
+                        </div>
+                        );
+                    })}    
+                </div>
 
-                <label>Type</label>  
-                {types.map((type, i) => {
-                    return (
-                    <div key={i}>
-                        <label>
-                        <input
-                            type="checkbox"
-                            name={type.name}
-                            id={i}
-                            value={type.id}
-                            onChange={e=>handleCheck(e)}
-                        />
-                        {type.name}
-                        </label>
-                        <br />
-                    </div>
-                    );
-                })}
+                <div>
+                    <label>Health points 
+                    <input name='hp' onChange={e=>onChange(e)}></input>
+                    {error.hp?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
+                    </label>
+                </div>  
+
+                <div>
+                    <label>Attack  
+                    <input name='attack' onChange={e=>onChange(e)}></input>
+                    {error.attack?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
+                </label>    
+                </div>
                 
-
-                <label>Health points 
-                 <input name='hp' onChange={e=>onChange(e)}></input>
-                 {error.hp?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
-                </label>
-
-                <label>Attack  
-                 <input name='attack' onChange={e=>onChange(e)}></input>
-                 {error.attack?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
-                </label>
-
-                <label>Defense  
-                 <input name='defense' onChange={e=>onChange(e)}></input>
-                 {error.defense?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
-                </label>
-
-                <label>Speed 
-                 <input name='speed' onChange={e=>onChange(e)}></input>
-                 {error.speed?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
-                </label>
-
-                <label>Height  
-                 <input name='height' onChange={e=>onChange(e)}></input>
-                 {error.height?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
-                </label>
-
-                <label>Weight  
-                 <input name='weight' onChange={e=>onChange(e)}></input>
-                 {error.weight?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
-                </label>
+                <div>
+                    <label>Defense  
+                    <input name='defense' onChange={e=>onChange(e)}></input>
+                    {error.defense?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
+                    </label>
+                </div>
+                
+                <div>
+                    <label>Speed 
+                    <input name='speed' onChange={e=>onChange(e)}></input>
+                    {error.speed?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
+                    </label>
+                </div>
+                
+                <div>
+                    <label>Height  
+                    <input name='height' onChange={e=>onChange(e)}></input>
+                    {error.height?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
+                    </label>    
+                </div>
+                
+                <div>
+                    <label>Weight  
+                    <input name='weight' onChange={e=>onChange(e)}></input>
+                    {error.weight?(<h4 className="error"><small>Debe ser mayor a diez</small></h4>) : false}
+                    </label>    
+                </div>
 
                 <button type='submit' onChange={e=>onChange(e)}>Add Pokemon</button>
             </form>

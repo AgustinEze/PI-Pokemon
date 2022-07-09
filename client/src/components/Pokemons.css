@@ -15,7 +15,7 @@ body{
     margin: auto; /* Will not center vertically and won't work in IE6/7. */
     left: 0;
     right: 0;
-    background-color: grey solid;
+    background-color: grey ;
 }
 .addButton{
     position:fixed;

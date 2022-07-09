@@ -104,9 +104,9 @@ export function Settings(){
                 if(!!poke.type){
                     return poke.type.some(t=>filterObj.filter.includes(t))
                 }
-                else {
+                /* else {
                     return poke.types.some(t=>filterObj.filter.includes(t.name))
-                }
+                } */
             })
         }
 

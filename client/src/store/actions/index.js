@@ -23,7 +23,7 @@ export function getPokemons(){
         })
         .catch(err=>{
             console.log(err)
-            alert('Ocurrio un error')
+            alert('Ocurrio un error al hacer get a Pokemons')
         })
     }
 }
@@ -39,7 +39,7 @@ export function getPokemonById(id){
         })
         .catch(err=>{
             console.log(err)
-            alert('Ocurrio un error')
+            alert(`Ocurrio un error al buscar el pokemon ${id} `)
         })
     }
 }
@@ -61,7 +61,7 @@ export function getPokemonByName(name){
         })
         .catch(err=>{
             console.log(err)
-            alert('Ocurrio un error')
+            alert(`Ocurrio un error al buscar a pokemon ${name}`)
         })
     }
 }
