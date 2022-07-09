@@ -4,15 +4,18 @@ const {Pokemon, Type} = require('../db');
 
 const router = Router();
 
-const MAX_POKES = 25
+const MAX_POKES = 10
 
-// luis
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.post('/', async (req, res, next)=>{ 
-    const {id, image, name, hp, type, 
+    let {id, image, name, hp, type, 
         attack, defense, speed, height, 
         weight}=req.body
+
+    if(!image){
+        image=__dirname+'/images/pokeDefault.jpg'
+    }
     try{const newPokemon = await Pokemon.create(
         {id, name, hp,
         attack, defense,
@@ -35,7 +38,7 @@ router.get('/',async (req, res, next)=>{
     const {name}=req.query;
     if(name){
         try{
-            let pokeDb =await Pokemon.findOne({where:{name}, include:[Type]})
+            let pokeDb =await Pokemon.findOne({where:{name}, /* include:[Type]} */})
             if(pokeDb) return res.send([pokeDb])
             let pokeApi= await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
             return res.send ([{
@@ -58,7 +61,9 @@ router.get('/',async (req, res, next)=>{
     }
     //not query
     try{
-        const pokemonDb = await Pokemon.findAll({include:{model: Type},attributes:['id', 'name', 'image', 'attack']})
+        const pokemonDb = await Pokemon.findAll(
+            {/* include: {model:Type}, */
+            attributes:['id', 'name', 'image', 'attack']})
 
         let pokemonUrl =await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKES}`)
         pokemonUrl = pokemonUrl.data.results.map(poke => poke.url)
@@ -87,7 +92,7 @@ router.get('/',async (req, res, next)=>{
 router.get('/:idPokemon',async (req, res, next)=>{
     let {idPokemon}= req.params;
     try{
-        const pokeDb = await Pokemon.findByPk(idPokemon, {include:{model: Type}})
+        const pokeDb = await Pokemon.findByPk(idPokemon, /* {include:{model: Type} }*/)
         if(pokeDb) return res.send(pokeDb)
         const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`)
         return res.send ({
